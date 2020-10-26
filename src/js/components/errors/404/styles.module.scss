@@ -1,0 +1,20 @@
+.container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > p{
+    font-family: sans-serif;
+    color: #000;
+    font-size: 16px;
+
+    &:first-child{
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+  }
+}

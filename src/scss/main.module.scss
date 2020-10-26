@@ -1,0 +1,53 @@
+@import './smart-grid.sass';
+@import './vars.scss';
+
+*{
+  box-sizing: border-box;
+}
+
+menu, h1, h2, ul, li{
+	margin: 0;
+	padding: 0;	
+}
+
+ul{
+	list-style: none;
+}
+
+a{
+	text-decoration: none;
+	color: inherit;
+}
+
+// .noselect {
+//   -webkit-touch-callout: none; /* iOS Safari */
+//     -webkit-user-select: none; /* Safari */
+//      -khtml-user-select: none; /* Konqueror HTML */
+//        -moz-user-select: none; /* Firefox */
+//         -ms-user-select: none; /* Internet Explorer/Edge */
+//             user-select: none; /* Non-prefixed version, currently
+//                                   supported by Chrome and Opera */
+// }
+
+body{
+  background: linear-gradient(229.68deg, #6879BB 7.06%, #9300BB 95.23%);
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.container{
+  @include wrapper();
+  
+  @media screen and (min-width: 1921px){
+    max-width: 62.5%;
+    padding: 0;
+  }
+}
+
+.swiper-button-prev{
+  width: 6vw;
+  @include sm-block{
+    font-size: 6vw !important;
+  }
+}

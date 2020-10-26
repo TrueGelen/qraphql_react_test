@@ -1,0 +1,66 @@
+@import '../../../../scss/vars.scss';
+
+.errorLayout{
+  border: 1px solid $border;
+  position: fixed;
+  top: 5vw;
+  right: 5vw;
+
+  transform: translateX(calc(100% + 5vw));
+  transition: .3s ease-in;
+
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(to right, #ec008c, #fc6767);
+
+  min-width: 20vw;
+  min-height: 10vw;    
+  border-radius: $br;
+
+  padding: 2vw 5vw;
+  z-index: 999;  
+}
+
+.show{
+  transform: none;
+}
+
+.errMessage{
+  font-family: sans-serif;
+  font-size: 16px;
+  line-height: 1.3;
+  color: white;
+}
+
+.close{
+  // border: 1px solid red;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  min-width: 20px;
+  min-height: 20px;
+  width: 2.5vw;
+  height: 2.5vw;
+
+  cursor: pointer;
+
+  & > p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 0;
+    margin: 0;    
+    min-width: 20px;
+    width: 2.5vw;
+    height: 2px;
+    background: white;
+
+    &:first-child{
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &:last-child{
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+}

@@ -1,0 +1,12 @@
+@import '../../../scss/smart-grid.sass';
+@import '../../../scss/vars.scss';
+
+
+//styles for modify component
+
+.counter{
+  align-self: center;
+  transform: translateY(80%);
+
+  @include xs(transform, none);
+}

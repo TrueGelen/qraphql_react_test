@@ -1,0 +1,126 @@
+@import '../../../../scss/smart-grid.sass';
+@import '../../../../scss/vars.scss';
+
+//page styles
+.pageWrapper{	
+  // border: 1px solid red;
+  position: relative;
+	display: flex;
+  justify-content: space-between;
+  
+  margin-top: 20px;
+
+  @media screen and (min-width: 1921px){
+    margin-top: 1vw;
+  }
+
+  @media screen and (max-width: 1200px){
+    margin-top: 2vw;
+  }
+
+  @include sm-block{
+    flex-wrap: wrap;
+  }
+}
+
+.productsWrapper{
+  position: relative;
+  // border: 1px solid red;
+	width: 80%;
+  // @include row-flex();
+
+  margin-bottom: -10px;
+
+  @media screen and (min-width: 1921px){
+    margin-bottom: -.5vw;
+  }
+
+  @media screen and (max-width: 1200px){
+    margin-bottom: -1vw;
+  }
+
+  @include sm-block{
+    width: 100%;
+    margin-bottom: -1.5vw;
+  }
+
+  @include xs-block{
+    margin-bottom: -10px;
+  }
+
+  & > *{
+    margin-bottom: 10px;
+
+    @media screen and (min-width: 1921px){
+      margin-bottom: .5vw;
+    }
+
+    @media screen and (max-width: 1200px){
+      margin-bottom: 1vw;
+    }
+
+    @include sm-block{
+      margin-bottom: 1.5vw;
+    }
+
+    @include xs-block{
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.title{
+  padding: 10px 20px;
+  border-radius: $br;
+  background-color: $lb;
+
+  font-family: sans-serif;
+  font-size: 35px;
+
+  @media screen and (min-width: 1921px){
+    padding: .5vw 1vw;
+    border-radius: $br1921;
+    font-size: 1.75vw;
+  }
+
+  @media screen and (max-width: 1200px){
+    padding: 1vw 2vw;
+    border-radius: $br;
+    font-size: 3.5vw;
+  }
+
+  @include xs-block{
+    font-size: 6.5vw;
+  }
+}
+
+.filterButton{
+  display: none;
+  background-color: $lb;
+  width: 100%;
+  padding: 2vw;
+  border-radius: $br;
+  box-shadow: 0px 0px .5vw 0px rgb(185, 184, 184);
+
+  & > p{
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 3vw;
+
+    margin: 0;
+
+    @include xs-block{
+      font-size: 5vw;
+     }
+  } 
+
+  margin-bottom: 1.5vw;
+
+  @include sm-block{
+    display: block;
+  }
+
+  @include xs-block{
+    margin-bottom: 10px;
+  }
+}
