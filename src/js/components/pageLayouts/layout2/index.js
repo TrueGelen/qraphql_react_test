@@ -9,20 +9,12 @@ import moduleStyles from './styles.module.scss'
 
 export default function PageLayout({
   className,
-  form,
   ...props }) {
 
   return (
     <>
       <div className={moduleStyles.pageWrapper}>
-        <img
-          className={moduleStyles.logo}
-          src="/assets/imgs/proceset_logo.png" />
-
-        <div className={moduleStyles.formWrapper}>
-          {form}
-        </div>
-
+        {props.children}
       </div>
     </>
   )

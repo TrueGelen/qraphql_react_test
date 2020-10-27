@@ -3,4 +3,33 @@
 
 .header{
   width: 100%;
+  background-color: white;
+  box-shadow: 0px .1vw .5vw rgba(104, 121, 187, 0.1);
+
+  padding: 1vw 1.5vw;
+}
+
+.content{
+  
+}
+
+.btnMenu{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  @include md-block{
+    cursor: default;
+  }
+
+  & > img{
+    width: 1.95vw;
+    height: 1.95vw;
+  }
+
+  & > p {
+    font-family: OpenSans-Regular;
+    font-size: 1.15vw;
+    margin-left: 2px;
+  }
 }

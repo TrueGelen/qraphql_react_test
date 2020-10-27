@@ -5,7 +5,7 @@
 .pageWrapper{	
   // border: 1px solid red;  
   position: relative;
-  background: linear-gradient(229.68deg, #6879BB 7.06%, #9300BB 95.23%);
+  background: $mainBg;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
 }

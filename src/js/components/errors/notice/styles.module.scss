@@ -1,7 +1,7 @@
 @import '../../../../scss/vars.scss';
 
 .errorLayout{
-  border: 1px solid $border;
+  border: 1px solid red;
   position: fixed;
   top: 5vw;
   right: 5vw;
@@ -15,7 +15,7 @@
 
   min-width: 20vw;
   min-height: 10vw;    
-  border-radius: $br;
+  border-radius: 5px;
 
   padding: 2vw 5vw;
   z-index: 999;  

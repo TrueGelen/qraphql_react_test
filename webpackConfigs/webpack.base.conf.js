@@ -75,7 +75,8 @@ module.exports = {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]'
+          name: '[folder]/[name].[ext]',
+          outputPath: `../${PATHS.static}/fonts/`
         }
       },
       {
@@ -158,13 +159,13 @@ module.exports = {
       filename: 'index.html',
       inject: true
     }),
-    // new CopyPlugin({
-    //   patterns: [
-    //     { from: `${PATHS.src}/imgs`, to: `${PATHS.static}/imgs` },
-    //     // { from: `${PATHS.src}/fonts`, to: `${PATHS.static}/fonts` },
-    //     // { from: `${PATHS.src}/static`, to: '' },
-    //   ]
-    // })
+    new CopyPlugin({
+      patterns: [
+        { from: `${PATHS.src}/imgs`, to: `${PATHS.static}/imgs` },
+        { from: `${PATHS.src}/fonts`, to: `${PATHS.static}/fonts` },
+        // { from: `${PATHS.src}/static`, to: '' },
+      ]
+    })
   ]
 }
 

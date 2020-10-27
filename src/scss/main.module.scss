@@ -1,5 +1,6 @@
 @import './smart-grid.sass';
 @import './vars.scss';
+@import '_fonts';
 
 *{
   box-sizing: border-box;
@@ -30,9 +31,8 @@ a{
 // }
 
 body{
-  background: linear-gradient(229.68deg, #6879BB 7.06%, #9300BB 95.23%);
-  background-size: cover;
-  background-repeat: no-repeat;
+  position: relative;
+  background-color: $mainBg;
   min-height: 100vh;
 }
 

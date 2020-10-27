@@ -1,6 +1,7 @@
 import RegistrationPage from '../pages/registration'
 import LogInPage from '../pages/login'
 import LKPage from '../pages/lk'
+import ProcessesPage from '../pages/processes'
 import Page404 from '../pages/page404'
 
 //for dev
@@ -8,7 +9,7 @@ let routes = [
   {
     name: 'home',
     url: '/',
-    container: LogInPage,
+    container: ProcessesPage,
     exact: true
   },
   {

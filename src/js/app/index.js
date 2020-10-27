@@ -1,12 +1,15 @@
 /* libs */
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch, Link, NavLink } from 'react-router-dom'
-import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, ApolloLink, concat } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { connect } from 'react-redux'
+import {
+  useQuery,
+  gql
+} from '@apollo/client';
 
 /* components */
 import NoticeError from '../components/errors/notice'
+import LogInPage from '../pages/login'
 
 /* styles */
 import moduleStyles from './app.module.scss'
@@ -17,33 +20,34 @@ import { routes, routesMap } from '../routes'
 import {
   errorHide
 } from '../Redux/actionCreators'
+import { baseUrl } from '../Redux/constants'
 
-
-const httpLink = new HttpLink({ uri: 'http://localhost:4000/api' });
-const authMiddleware = new ApolloLink((operation, forward) => {
-  // add the authorization to the headers
-  operation.setContext({
-    headers: {
-      authorization: `Bearer ${localStorage.getItem('token')}` || null,
+const GET_USER_BY_ID = gql`
+  query ($id: Int!){
+    userById(id: $id){
+      id
     }
-  });
-  return forward(operation);
-})
-// const client = new ApolloClient({
-//   uri: 'http://localhost:4000/api',
-//   cache: new InMemoryCache()
-// });
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: concat(authMiddleware, httpLink),
-});
-
-class App extends React.Component {
-
-  state = {
-    authorized: false
   }
+`;
 
+export default function App(props) {
+  const { loading, error, data } = useQuery(GET_USER_BY_ID,
+    {
+      variables: { id: 1 }
+    });
+
+  /*if (loading) return <p>loading...</p>
+  if (error) return <p>`Error! ${error}`</p>*/
+
+  const dispatch = useDispatch()
+  const errStore = useSelector(state => state.errStore)
+
+  /* state = {
+    authorized: false
+  } */
+
+  let isAuthorized = data ? true : false
+  // let isAuthorized = false
   /*openMobMenu = () => {
     this.setState({ mobMenu: true })
   }
@@ -52,54 +56,42 @@ class App extends React.Component {
     this.setState({ mobMenu: false })
   } */
 
-  render() {
-    //to del later
-    // this.cartStore = this.props.rootStore.cart
-
-    let routsContainers = routes.map((route) => {
-      return <Route path={route.url}
-        component={route.container}
-        exact={route.exact}
-        key={route.url}
-      />
-    })
-    return (
-      <ApolloProvider client={client}>
-        <Router>
+  let routsContainers = routes.map((route) => {
+    return <Route path={route.url}
+      component={route.container}
+      exact={route.exact}
+      key={route.url}
+    />
+  })
+  return (
+    <Router>
+      <>
+        {isAuthorized ?
           <>
             <header className={moduleStyles.header}>
+              <div className={moduleStyles.btnMenu}>
+                <img src={`${baseUrl}assets/imgs/menu.png`} />
+                <p>Меню</p>
+              </div>
             </header>
-
             {/* content */}
             <main className={moduleStyles.content}>
-              <div className={`${mainStyles.container} ${moduleStyles.container_mod}`}>
-                <Switch>
-                  {routsContainers}
-                </Switch>
-              </div>
+              <Switch>
+                {routsContainers}
+              </Switch>
             </main>
-
-            <NoticeError
-              text={this.props.errStore.errMessage}
-              onClose={this.props.hideError}
-              isError={this.props.errStore.isError}
-            />
-
           </>
-        </Router >
-      </ApolloProvider>
-    )
-  }
+          :
+          <LogInPage />
+        }
+
+        <NoticeError
+          text={errStore.errMessage}
+          onClose={() => { dispatch(errorHide) }}
+          isError={errStore.isError}
+        />
+
+      </>
+    </Router >
+  )
 }
-
-const mapStateToProps = state => ({
-  errStore: state.errStore
-})
-
-const mapDispatchToProps = dispatch => ({
-  hideError: () => { dispatch(errorHide()) }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
-// export default withStore(App)
-
