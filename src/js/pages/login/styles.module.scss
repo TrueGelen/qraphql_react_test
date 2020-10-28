@@ -1,12 +1,19 @@
 @import '../../../scss/smart-grid.sass';
 @import '../../../scss/vars.scss';
 
+.form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-//styles for modify component
+  padding: 2vw;
 
-.counter{
-  align-self: center;
-  transform: translateY(80%);
+  & > * {
+    margin: .3vw 0;
+    width: 100%;
 
-  @include xs(transform, none);
+    &:first-child{
+      margin-top: 0;
+    }
+  }
 }

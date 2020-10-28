@@ -46,8 +46,8 @@ export default function App(props) {
     authorized: false
   } */
 
-  let isAuthorized = data ? true : false
-  // let isAuthorized = false
+  // let isAuthorized = data ? true : false
+  let isAuthorized = false
   /*openMobMenu = () => {
     this.setState({ mobMenu: true })
   }
