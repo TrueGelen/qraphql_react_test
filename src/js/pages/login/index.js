@@ -1,18 +1,20 @@
 /* lib */
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useMutation, gql } from '@apollo/client';
-import { useDispatch, useSelector } from 'react-redux'
 
 /* components */
 import PageLayout from '../../components/pageLayouts/layout1'
 import Input from '../../components/inputs/mainInput'
+import PasswordInp from '../../components/inputs/password'
+import Button from '../../components/buttons/goldBtn'
 /* other */
-// import { urlBuilder } from '../../routes'
+import { routesMap } from '../../routes'
 import {
 } from '../../Redux/actionCreators'
 
 /* styles */
-import moduleStyles from './styles.module.scss'
+import md from './styles.module.scss'
 
 const LOGIN = gql`
   mutation ($email: String!, $password: String!) {
@@ -23,7 +25,7 @@ const LOGIN = gql`
 `;
 
 
-function LogInPage(props) {
+export default function LogInPage(props) {
   console.log('LogInPage')
 
   const [login, { data }] = useMutation(LOGIN);
@@ -67,7 +69,7 @@ function LogInPage(props) {
   }
 
   const form = <form
-    className={moduleStyles.form}
+    className={md.form}
     onSubmit={(e) => { e.preventDefault() }}>
     <Input
       value={state.email.value}
@@ -78,27 +80,34 @@ function LogInPage(props) {
       isValid={state.email.isValid}
       onChange={(e) => { onChange(e, "email") }}
     />
-    <input
-      className={`${moduleStyles.inp} ${moduleStyles.inp_password}`}
-      type="password" name="password" placeholder="Пароль"
-      onChange={() => { }} />
-    <input
-      className={`${moduleStyles.btn} ${moduleStyles.inp_password}`}
-      type="submit" value="Войти в систему"
+    <PasswordInp
+      value={state.password.value}
+      name="password"
+      placeholder="Пароль"
+      onChange={(e) => { onChange(e, "password") }}
+    />
+    <Button
+      type="submit"
       onClick={async (e) => {
-        let res = await login({ variables: { email: "racer@mail.com", password: "123456" } })
+        /* let res = await login({ variables: { email: "racer@mail.com", password: "123456" } })
         let token = res.data.login.token
         console.log(token)
-        window.localStorage.setItem("token", token)
-      }} />
-    <p>Зарегистрироваться</p>
+        window.localStorage.setItem("token", token)*/
+      }}
+    >Войти в систему</Button>
   </form>
 
   return (
-    <PageLayout
-      form={form}
-    />
+    <>
+      <PageLayout
+        form={form}
+      >
+        <Link
+          className={`${md.registration}`}
+          to={routesMap.registration}>Зарегистрироваться</Link>
+      </PageLayout>
+    </>
   )
 }
 
-export default LogInPage
+// export default LogInPage

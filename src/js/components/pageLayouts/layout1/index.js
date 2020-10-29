@@ -21,6 +21,7 @@ export default function PageLayout({
 
         <div className={moduleStyles.formWrapper}>
           {form}
+          {props.children}
         </div>
 
       </div>

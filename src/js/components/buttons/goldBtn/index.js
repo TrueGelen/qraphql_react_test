@@ -1,41 +1,42 @@
-import React from 'react'
+import React, { Children } from 'react'
 import PropTypes from 'prop-types'
 
-import moduleStyles from './index.module.scss'
+import md from './index.module.scss'
 
 export default function Button({
   className,
   onClick,
-  ...otherProps }) {
+  type,
+  disabled,
+  ...props }) {
 
-  const add = (e) => {
+  const clickHandler = (e) => {
     e.stopPropagation()
-    onAdd()
-  }
-
-  const remove = (e) => {
-    e.stopPropagation()
-    onRemove()
+    onClick()
   }
 
   return (
-    <div {...otherProps}
-      className={`${moduleStyles.noselect}
-				${moduleStyles.mainStyles}
-        ${moduleStyles.inCart}
+    <input
+      className={`${md.btn}
         ${className && className}`}
-      onClick={onClick}>
-      {innerOnRemove}
-    </div>
+      type={type}
+      value="Войти в систему"
+      onClick={clickHandler}
+      disabled={disabled}>
+    </input>
   )
 }
 
 Button.defaultProps = {
+  type: "button",
   className: undefined,
+  disabled: false,
   onClick: () => { }
 }
 
 Button.propTypes = {
   className: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  type: PropTypes.string,
+  disabled: PropTypes.bool
 }
