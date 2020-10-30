@@ -24,7 +24,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
   operation.setContext({
     headers: {
-      authorization: `Bearer ${localStorage.getItem('token')}` || null,
+      authorization: localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : null,
     }
   });
   return forward(operation);
@@ -34,6 +34,11 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: concat(authMiddleware, httpLink),
 });
+
+// const client = new ApolloClient({
+//   uri: 'http://localhost:4000/api',
+//   cache: new InMemoryCache()
+// });
 
 ReactDom.render(
   <Provider store={store}>

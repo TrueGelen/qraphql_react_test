@@ -1,5 +1,6 @@
 /* lib */
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useMutation, gql } from '@apollo/client';
 
@@ -11,6 +12,7 @@ import Button from '../../components/buttons/goldBtn'
 /* other */
 import { routesMap } from '../../routes'
 import {
+  errorShow
 } from '../../Redux/actionCreators'
 
 /* styles */
@@ -28,9 +30,9 @@ const LOGIN = gql`
 export default function LogInPage(props) {
   console.log('LogInPage')
 
-  const [login, { data }] = useMutation(LOGIN);
-  // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error :(</p>;
+  const [login, { data, loading }] = useMutation(LOGIN)
+
+  const dispatch = useDispatch()
   const [state, setState] = useState({
     email: {
       value: '',
@@ -72,6 +74,7 @@ export default function LogInPage(props) {
     className={md.form}
     onSubmit={(e) => { e.preventDefault() }}>
     <Input
+      disabled={loading}
       value={state.email.value}
       type="email"
       name="email"
@@ -81,6 +84,7 @@ export default function LogInPage(props) {
       onChange={(e) => { onChange(e, "email") }}
     />
     <PasswordInp
+      disabled={loading}
       value={state.password.value}
       name="password"
       placeholder="Пароль"
@@ -88,13 +92,19 @@ export default function LogInPage(props) {
     />
     <Button
       type="submit"
+      disabled={loading}
       onClick={async (e) => {
-        /* let res = await login({ variables: { email: "racer@mail.com", password: "123456" } })
-        let token = res.data.login.token
-        console.log(token)
-        window.localStorage.setItem("token", token)*/
+        try {
+          const email = state.email.value
+          const password = state.password.value
+          let response = await login({ variables: { email, password } })
+          let token = response.data.login.token
+          window.localStorage.setItem("token", token)
+        } catch (error) {
+          dispatch(errorShow("Пользователь с такими почтой и паролем\n не найден!"))
+        }
       }}
-    >Войти в систему</Button>
+    >{loading ? "Вход в систему, ждите..." : "Войти в систему"}</Button>
   </form>
 
   return (
@@ -102,12 +112,21 @@ export default function LogInPage(props) {
       <PageLayout
         form={form}
       >
-        <Link
-          className={`${md.registration}`}
-          to={routesMap.registration}>Зарегистрироваться</Link>
+
+        {
+          loading ?
+            <p className={`${md.registration}`}> Зарегистрироваться </p>
+            :
+            <Link
+              className={`${md.registration}`}
+              to={routesMap.registration}>Зарегистрироваться</Link>
+        }
+
       </PageLayout>
     </>
   )
 }
 
 // export default LogInPage
+
+

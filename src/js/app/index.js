@@ -33,6 +33,8 @@ const GET_USER_BY_ID = gql`
 `;
 
 function App(props) {
+  // let loading = false
+  // let error = false
   const { loading, error, data } = useQuery(GET_USER_BY_ID,
     {
       variables: { id: 1 }
@@ -49,8 +51,8 @@ function App(props) {
     authorized: false
   } */
 
-  let isAuthorized = data ? true : false
-  // let isAuthorized = false
+  // let isAuthorized = data ? true : false
+  let isAuthorized = false
   /*openMobMenu = () => {
     this.setState({ mobMenu: true })
   }

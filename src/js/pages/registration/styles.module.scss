@@ -1,12 +1,30 @@
 @import '../../../scss/smart-grid.sass';
 @import '../../../scss/vars.scss';
 
+.form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-//styles for modify component
+  & > * {
+    margin: .2rem 0;
+    width: 100%;
 
-.counter{
-  align-self: center;
-  transform: translateY(80%);
+    &:first-child{
+      margin-top: 0;
+    }
+  }
+}
 
-  @include xs(transform, none);
+.question{
+  font-family: OpenSans-Regular, sans-serif;
+  color: #333333;  
+  font-size: .75rem;
+}
+
+.registration{
+  font-family: OpenSans-Regular, sans-serif;
+  color: #3167BA;
+  font-size: .75rem;
+  margin-top: 1rem;
 }
