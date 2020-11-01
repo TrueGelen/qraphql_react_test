@@ -4,39 +4,41 @@ import PropTypes from 'prop-types'
 import md from './index.module.scss'
 
 export default function Button({
-  className,
-  onClick,
-  type,
-  disabled,
-  ...props }) {
+	className,
+	onClick,
+	type,
+	value,
+	disabled,
+	...props }) {
 
-  const clickHandler = (e) => {
-    e.stopPropagation()
-    onClick()
-  }
+	const clickHandler = (e) => {
+		e.stopPropagation()
+		onClick()
+	}
 
-  return (
-    <input
-      className={`${md.btn}
+	return (
+		<input
+			className={`${md.btn}
         ${className && className}`}
-      type={type}
-      value="Войти в систему"
-      onClick={clickHandler}
-      disabled={disabled}>
-    </input>
-  )
+			type={type}
+			value={value}
+			onClick={clickHandler}
+			disabled={disabled}>
+		</input>
+	)
 }
 
 Button.defaultProps = {
-  type: "button",
-  className: undefined,
-  disabled: false,
-  onClick: () => { }
+	type: "button",
+	className: undefined,
+	disabled: false,
+	onClick: () => { }
 }
 
 Button.propTypes = {
-  className: PropTypes.string,
-  onClick: PropTypes.func,
-  type: PropTypes.string,
-  disabled: PropTypes.bool
+	className: PropTypes.string,
+	onClick: PropTypes.func,
+	type: PropTypes.string,
+	disabled: PropTypes.bool,
+	value: PropTypes.string.isRequired
 }

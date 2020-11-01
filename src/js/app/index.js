@@ -1,10 +1,10 @@
 /* libs */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch, Link, NavLink, Redirect } from 'react-router-dom'
 import {
-  useQuery,
-  gql
+	useQuery,
+	gql
 } from '@apollo/client';
 
 /* components */
@@ -12,15 +12,14 @@ import NoticeError from '../components/errors/notice'
 import LoadingSpinner from '../components/loadingSpinner'
 
 /* styles */
-import moduleStyles from './app.module.scss'
+import md from './app.module.scss'
 import mainStyles from '../../scss/main.module.scss'
 
 /* other */
 import { routes, routesMap } from '../routes'
 import {
-  errorHide,
-  showError,
-  errorShow
+	errorHide,
+	login
 } from '../Redux/actionCreators'
 import { baseUrl } from '../Redux/constants'
 
@@ -32,99 +31,171 @@ const GET_USER_BY_ID = gql`
   }
 `;
 
+const CURRENT_USER = gql`
+	query{
+		currentUser{
+			id
+		}
+	}
+`;
+
 function App(props) {
-  // let loading = false
-  // let error = false
-  const { loading, error, data } = useQuery(GET_USER_BY_ID,
-    {
-      variables: { id: 1 }
-    });
+	console.log("App")
+	// let loading = false
+	// let error = false
+	// const { loading, error, data } = useQuery(GET_USER_BY_ID,
+	// 	{
+	// 		variables: { id: 1 }
+	// 	});
+	const [menu, setMenu] = useState(true)
+	const { loading, error, data = null } = useQuery(CURRENT_USER);
 
-  const dispatch = useDispatch()
-  const errStore = useSelector(state => state.errStore)
+	const dispatch = useDispatch()
+	const errStore = useSelector(state => state.errStore)
+	const userId = useSelector(state => state.user.id)
 
-  // if (error) {
-  // console.log("SDF:LJKSD:FLKJSD:LKFJSD:LKJFS:DLKJF")
-  // dispatch(errorShow("JIB<RF"))
-  // }
-  /* state = {
-    authorized: false
-  } */
+	let isAuthorized = data ? true : false
+	if (data && data.currentUser.id !== userId) {
+		dispatch(login(data.currentUser.id))
+	}
 
-  // let isAuthorized = data ? true : false
-  let isAuthorized = false
-  /*openMobMenu = () => {
-    this.setState({ mobMenu: true })
-  }
- 
-  hideMobMenu = () => {
-    this.setState({ mobMenu: false })
-  } */
+	// let isAuthorized = false
+	const openMenu = () => {
+		setMenu(true)
+	}
 
-  const authRouters = ["login", "registration"]
+	const hideMenu = () => {
+		console.log(1)
+		setMenu(false)
+	}
 
-  let authorizedRouters = []
-  let nonAuthorizedRouters = []
-  routes.forEach((route) => {
-    if (!(route.name === authRouters[0]) && !(route.name === authRouters[1])) {
-      authorizedRouters.push(<Route path={route.url}
-        component={route.container}
-        exact={route.exact}
-        key={route.url}
-      />
-      )
-    } else
-      nonAuthorizedRouters.push(<Route path={route.url}
-        component={route.container}
-        exact={route.exact}
-        key={route.url}
-      />)
-  })
+	/* const authRouters = ["login", "registration"]
 
-  return (
-    <Router>
-      <>
-        {loading ? <LoadingSpinner />
-          :
+	let authorizedRouters = []
+	let nonAuthorizedRouters = []
+	routes.forEach((route) => {
+		if (!(route.name === authRouters[0]) && !(route.name === authRouters[1])) {
+			authorizedRouters.push(<Route path={route.url}
+				component={route.container}
+				exact={route.exact}
+				key={route.url}
+			/>
+			)
+		} else
+			nonAuthorizedRouters.push(<Route path={route.url}
+				component={route.container}
+				exact={route.exact}
+				key={route.url}
+			/>)
+	})*/
 
-          isAuthorized ?
-            <>
-              < header className={moduleStyles.header}>
-                <div className={moduleStyles.btnMenu}>
-                  <img src={`${baseUrl}assets/imgs/menu.png`} />
-                  <p>Меню</p>
-                </div>
-              </header>
-              {/* content */}
-              <main className={moduleStyles.content}>
-                <Switch>
-                  {authorizedRouters}
-                </Switch>
-              </main>
-            </>
-            :
-            <>
-              <Redirect
-                to={{
-                  pathname: "/login"
-                }}
-              />
-              <Switch>
-                {nonAuthorizedRouters}
-              </Switch>
-            </>
+	const routesComponents = routes.map((route) => {
+		return <Route path={route.url}
+			component={route.container}
+			exact={route.exact}
+			key={route.url}
+		/>
+	})
 
-        }
+	return (
+		<Router>
+			<>
+				{loading ? <LoadingSpinner />
+					:
+					<>
+						{
+							!isAuthorized &&
+							<Redirect
+								to={{
+									pathname: "/login"
+									// pathname: "/registration"
+								}}
+							/>
+						}
+						<header className={md.header}>
+							<div className={`${md.btnMenu} ${menu && md.btnMenu_invisible}`}
+								onClick={openMenu}>
+								<img src={`${baseUrl}assets/imgs/menu.png`} />
+								<p>Меню</p>
+							</div>
+						</header>
+						{/* content */}
+						<main className={md.content}>
+							<Switch>
+								{routesComponents}
+							</Switch>
+						</main>
+					</>
+				}
 
-        <NoticeError
-          text={errStore.errMessage}
-          onClose={() => { dispatch(errorHide()) }}
-          isError={errStore.isError}
-        />
+				{
+					menu &&
+					<div className={md.menuWrapper}>
+						<menu className={md.menuLeftPart}>
+							<div className={`${md.btnMenu} ${md.btnMenu_opened}`}
+								onClick={hideMenu}>
+								<img src={`${baseUrl}assets/imgs/menu.png`} />
+								<p>proceset</p>
+							</div>
+							<ul className={md.menu}>
+								<li>
+									<img src={`${baseUrl}assets/imgs/user_icon.png`} />
+									<p>{"username"}</p>
+								</li>
+								<li>
+									<img src={`${baseUrl}assets/imgs/process_icon.png`} />
+									<p>Список процессов</p>
+								</li>
+							</ul>
+						</menu>
+						<div className={md.menuRightPart}
+							onClick={hideMenu}></div>
+					</div>
+				}
 
-      </>
-    </Router >
-  )
+				<NoticeError
+					text={errStore.errMessage}
+					onClose={() => { dispatch(errorHide()) }}
+					isError={errStore.isError}
+				/>
+
+			</>
+		</Router >
+	)
 }
 
 export default App
+
+
+
+// isAuthorized ?
+// 						<>
+// 							< header className={md.header}>
+// 								<div className={md.btnMenu}>
+// 									<img src={`${baseUrl}assets/imgs/menu.png`} />
+// 									<p>Меню</p>
+// 								</div>
+// 							</header>
+// 							{/* content */}
+// 							<main className={md.content}>
+// 								<Switch>
+// 									{routesComponents}
+// 								</Switch>
+// 								{/* {<Switch>
+// 									{authorizedRouters}
+// 								</Switch>} */}
+// 							</main>
+// 						</>
+// 						:
+// 						<>
+// 							{<Redirect
+// 								to={{
+// 									// pathname: "/login"
+// 									// pathname: "/registration"
+// 									pathname: "/lk"
+// 								}}
+// 							/>}
+// 							<Switch>
+// 								{nonAuthorizedRouters}
+// 							</Switch>
+// 						</>
