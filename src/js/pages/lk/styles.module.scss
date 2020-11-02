@@ -1,6 +1,54 @@
 @import '../../../scss/smart-grid.sass';
 @import '../../../scss/vars.scss';
 
-.container{
+.layout{
+  // border: 1px solid red;
+}
 
+.header{
+  // border: 1px solid black;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__title{
+    font-family: OpenSans-Bold, sans-serif;
+    font-size: 2rem;
+    color: #404064;
+
+    margin: 0;
+
+    @include sm(font-size, 1.5rem);
+  }
+}
+
+.userData{
+  background-color: white;
+
+  padding: 1.75rem;
+  margin: 1.5rem 0 0 0;
+
+  &__item{
+    display: flex;
+    align-items: center;
+    margin: .8rem 0;
+  }
+
+  &__label{
+    font-family: OpenSans-Regular, sans-serif;
+    font-size: .8rem;
+    color: #999999;
+    width: 25%;
+    margin: 0;
+
+    @include sm(width, 35%);
+  }
+
+  &__inp{
+    width: 32%;
+    margin: 0;
+
+    @include sm(width, 60%);
+  }
 }

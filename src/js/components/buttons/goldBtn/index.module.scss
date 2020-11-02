@@ -44,5 +44,6 @@
   &:disabled{
     opacity: .7;
     box-shadow: none;
+    cursor: default;
   }
 }

@@ -1,5 +1,5 @@
 /* lib */
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 /* components */
@@ -13,7 +13,7 @@ export default function PageLayout({
 
   return (
     <>
-      <div className={moduleStyles.pageWrapper}>
+      <div className={`${moduleStyles.layout} ${className}`}>
         {props.children}
       </div>
     </>
@@ -21,11 +21,9 @@ export default function PageLayout({
 }
 
 PageLayout.defaultProps = {
-  className: undefined,
-  form: []
+  className: undefined
 }
 
 PageLayout.propTypes = {
-  className: PropTypes.string,
-  form: PropTypes.node
+  className: PropTypes.string
 }

@@ -31,6 +31,12 @@ let routes = [
     exact: true
   },
   {
+    name: 'processes',
+    url: '/processes',
+    container: ProcessesPage,
+    exact: true
+  },
+  {
     url: '**',
     container: Page404,
   }

@@ -2,10 +2,11 @@
 @import '../../../../scss/vars.scss';
 
 //page styles
-.pageWrapper{	
+.layout{	
   // border: 1px solid red;  
   position: relative;
   background: $mainBg;
   width: 100%;
-  min-height: 100%;
+
+  padding: 1.5rem;
 }
