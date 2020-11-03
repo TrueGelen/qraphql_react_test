@@ -1,17 +1,13 @@
 const { merge } = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.conf')
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 const buildWebpackConfig = merge(baseWebpackConfig, {
-	// BUILD config
-	mode: 'production',
-	plugins: [
-		new MomentLocalesPlugin({
-			localesToKeep: ['es-us', 'ru'],
-		}),
-	]
+  // BUILD config
+  mode: 'production',
+  plugins: [
+  ]
 })
 
 module.exports = new Promise((resolve, reject) => {
-	resolve(buildWebpackConfig)
+  resolve(buildWebpackConfig)
 })

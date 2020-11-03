@@ -9,10 +9,10 @@ import PageLayout from '../../components/pageLayouts/layout1'
 import Input from '../../components/inputs/mainInput'
 import PasswordInp from '../../components/inputs/password'
 import Button from '../../components/buttons/goldBtn'
+import AError from '../../components/errors/error'
 /* other */
 import { routesMap } from '../../routes'
 import {
-  errorShow,
   login
 } from '../../Redux/actionCreators'
 
@@ -32,7 +32,7 @@ const LOGIN = gql`
 
 
 export default function LogInPage(props) {
-  console.log('LogInPage')
+  // console.log('LogInPage')
 
   const [loginRequest, { data, error, loading }] = useMutation(LOGIN)
 
@@ -76,9 +76,25 @@ export default function LogInPage(props) {
       })
   }
 
+  const onSubmit = async () => {
+    try {
+      const email = state.email.value
+      const password = state.password.value
+      const response = await loginRequest({ variables: { email, password } })
+      const token = response.data.login.token
+      const id = response.data.login.user.id
+      window.localStorage.setItem("token", token)
+      dispatch(login(id))
+      // props.history.push("/")
+      props.history.go(0)
+    } catch (error) {
+      // dispatch(errorShow("Пользователь с такими почтой и паролем\n не найден!"))
+    }
+  }
+
   const form = <form
     className={md.form}
-    onSubmit={(e) => { e.preventDefault() }}>
+    onSubmit={(e) => { e.preventDefault(); onSubmit() }}>
     <Input
       disabled={loading}
       value={state.email.value}
@@ -100,20 +116,7 @@ export default function LogInPage(props) {
       type="submit"
       disabled={loading}
       value={loading ? "Вход в систему, ждите..." : "Войти в систему"}
-      onClick={async (e) => {
-        try {
-          const email = state.email.value
-          const password = state.password.value
-          const response = await loginRequest({ variables: { email, password } })
-          const token = response.data.login.token
-          const id = response.data.login.user.id
-          window.localStorage.setItem("token", token)
-          dispatch(login(id))
-          props.history.push("/")
-        } catch (error) {
-          dispatch(errorShow("Пользователь с такими почтой и паролем\n не найден!"))
-        }
-      }}
+      onClick={onSubmit}
     ></Button>
   </form>
 
@@ -130,6 +133,10 @@ export default function LogInPage(props) {
               <Link
                 className={`${md.registration}`}
                 to={routesMap.registration}>Зарегистрироваться</Link>
+          }
+          {
+            error && <AError className={md.errorNotification}
+              text="Неправильный логин или пароль" />
           }
         </PageLayout>
         :

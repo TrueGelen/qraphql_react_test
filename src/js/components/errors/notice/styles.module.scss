@@ -9,15 +9,17 @@
   transform: translateX(calc(100% + 5vw));
   transition: .3s ease-in;
 
-  display: flex;
+  display: flex; 
   justify-content: center;
-  background: linear-gradient(to right, #ec008c, #fc6767);
+  align-items: center;
+  // background: linear-gradient(to right, #ec008c, #fc6767);
+  background: #ff0000e3;
 
-  min-width: 20vw;
-  min-height: 10vw;    
+  // min-width: 20vw;
+  // min-height: 10vw;
   border-radius: 5px;
 
-  padding: 2vw 5vw;
+  padding: 2vw 4vw;
   z-index: 999;  
 }
 
@@ -35,12 +37,12 @@
 .close{
   // border: 1px solid red;
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 15px;
+  top: 15px;
   min-width: 20px;
   min-height: 20px;
-  width: 2.5vw;
-  height: 2.5vw;
+  width: 1.5vw;
+  height: 1.5vw;
 
   cursor: pointer;
 
@@ -51,7 +53,7 @@
     padding: 0;
     margin: 0;    
     min-width: 20px;
-    width: 2.5vw;
+    width: 1.5vw;
     height: 2px;
     background: white;
 

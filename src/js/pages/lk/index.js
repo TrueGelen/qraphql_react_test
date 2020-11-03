@@ -40,7 +40,6 @@ const EDIT_USER = gql`
 
 function LKPage(props) {
   // console.log('LKPage')
-  // const data = undefined
 
   const dispatch = useDispatch()
   const id = useSelector(state => state.user.id)
@@ -48,9 +47,11 @@ function LKPage(props) {
   const { loading: GUBILoading, error: GUBIErrore, data: GUBIData } = useQuery(GET_USER_BY_ID, {
     variables: { id },
   });
-  const [editUser, { loading: editLoading, error: editErrore, data: editData }] = useMutation(EDIT_USER)
-
-  // let loading = GUBILoading || editLoading ? true : false
+  const [editUser, {
+    loading: editLoading,
+    error: editErrore,
+    data: editData
+  }] = useMutation(EDIT_USER)
 
   if (GUBIErrore) {
     dispatch(errorShow("Не удалось получить данные с сервера :(\r\n Попробуйте позже"))
@@ -59,6 +60,7 @@ function LKPage(props) {
 
   const { firstName = "", secondName = "", email = "" } = GUBIData ? GUBIData.userById : {}
 
+  const [itWasSavedFlagForBtn, setItWasSavedFlagForBtn] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [formState, setFormState] = useState({
     firstName: {
@@ -155,14 +157,19 @@ function LKPage(props) {
   }
   if (!GUBILoading && !isLoaded) { updateStateOnGetData() }
 
-  const makeRequest = async () => {
+  const makeRequestOnEditUser = async () => {
     try {
       const firstName = formState.firstName.value
       const secondName = formState.secondName.value
       const email = formState.email.value
       const password = formState.password.value
-      let response = await editUser({ variables: { id, email, firstName, secondName } })
-
+      const response = await editUser({ variables: { id, email, firstName, secondName, password } })
+      if (response) {
+        setItWasSavedFlagForBtn(true)
+        setTimeout(() => {
+          setItWasSavedFlagForBtn(false)
+        }, 3000)
+      }
     } catch (e) {
       dispatch(errorShow("Что то пошло не так :(\r\n Попробуйте позже"))
     }
@@ -171,7 +178,7 @@ function LKPage(props) {
   const onSubmit = () => {
     const fields = Object.keys(formState)
     if (fields.every(field => formState[field].value !== '' && formState[field].isValid)) {
-      makeRequest()
+      makeRequestOnEditUser()
     } else {
       fields.forEach(field => onChange(formState[field].value, field))
     }
@@ -187,8 +194,8 @@ function LKPage(props) {
           <div className={md.header}>
             <p className={md.header__title}>{`${firstName} ${secondName}. Редактирование`}</p>
             <Button
-              disabled={editLoading}
-              value={editLoading ? "Сохранение..." : "Сохранить"}
+              disabled={editLoading || itWasSavedFlagForBtn}
+              value={editLoading ? "Сохранение..." : itWasSavedFlagForBtn ? "Сохранено" : "Сохранить"}
               onClick={onSubmit}
             />
           </div>

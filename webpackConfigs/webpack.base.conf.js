@@ -2,6 +2,7 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 const PATHS = {
   src: path.resolve(__dirname, '../src'),
@@ -165,7 +166,10 @@ module.exports = {
         { from: `${PATHS.src}/fonts`, to: `${PATHS.static}/fonts` },
         // { from: `${PATHS.src}/static`, to: '' },
       ]
-    })
+    }),
+    new MomentLocalesPlugin({
+      localesToKeep: ['es-us', 'ru'],
+    }),
   ]
 }
 

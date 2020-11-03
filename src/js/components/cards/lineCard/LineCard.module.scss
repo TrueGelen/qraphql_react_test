@@ -1,0 +1,235 @@
+@import '../../../../scss/smart-grid.sass';
+@import '../../../../scss/vars.scss';
+
+$headerColor: #6879BB;
+$titleColor: #535374;
+$labelColor: #999999;
+
+.card{
+  width: 100%;
+  background-color: white;
+
+  box-shadow: 0px .1vw .1vw rgba(0, 0, 0, 0.1);
+  border-radius: .2rem;
+  
+  overflow: hidden;
+  padding: .9rem 1.75rem 2.6rem 1.75rem;
+
+  @include lg(padding, .9rem 1.75rem 1.75rem 1.75rem);
+  @include md(padding, 15px);
+}
+
+.header{
+  // border: 1px solid red;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-bottom: .9rem;
+
+  @include md(padding-bottom, 15px);
+
+  &__title{
+    font-family: OpenSans-Bold, sans-serif;
+    font-size: 1.6rem;
+    color: $headerColor;
+    margin: 0;
+
+    @include md(font-size, 2.5vw);
+  }
+
+  &__link{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: $headerColor;
+
+    & > p{
+      font-family: OpenSans-Regular, sans-serif;
+      font-size: 1.2rem;
+      color: inherit;
+      margin: 0;
+
+      @include md(font-size, 2.2vw);
+    }
+
+    & > img{
+      width: .7rem;
+      min-width: 7px;
+      margin-left: .5rem;
+
+      @include md(width, 1.3vw);
+    }
+
+    &_disabled{
+      cursor: default;
+      opacity: .7;
+    }
+  }
+
+  &::after{
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: -5%;
+    width: 105%;
+    height: 1px;
+    background-color: $labelColor;
+  }
+}
+
+.body{
+  // border: 1px solid blue;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  margin-top: 1.5rem;
+
+  @include md(margin-top, 2vw);
+
+  &__item{
+    margin-left: 3rem;
+
+    &:first-child{
+      margin-left: 0;
+      margin-right: 5.5rem;
+    }
+
+    &:nth-child(2){
+      margin-left: 0;
+    }
+
+    @include lg-block{
+      margin-left: 2rem;
+
+      &:first-child{
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      &:nth-child(2){
+        margin-left: 2rem;
+      }
+    }
+
+    @include md-block{
+      margin-left: 20px;
+
+      &:first-child{
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      &:nth-child(2){
+        margin-left: 20px;
+      }
+    }
+
+    @include md-block{
+      margin-left: 10px;
+
+      &:first-child{
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      &:nth-child(2){
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.dataCell{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  margin: 2rem 0;
+
+  @include md(margin, 3vw 0);
+  @include sm(align-items, center);
+
+  &:first-child{
+    margin-top: 0;
+  }
+
+  &:last-child{
+    margin-bottom: 0;
+  }
+
+  &__icon{
+    width: 1rem;
+    min-width: 15px;
+    transform: translateY(12.5%);
+
+    @include sm-block{
+      width: 2vw;
+      transform: none;
+    };
+  }
+
+  &__data{
+    margin-left: .5rem;
+  }
+
+  &__title{
+    font-family: OpenSans-Bold, sans-serif;
+    font-size: 1.3rem;
+    color: $titleColor;
+    margin: 0;
+
+    @include lg(font-size, 1rem);
+    @include md(font-size, 1.8vw);
+  }
+
+  &__label{
+    font-family: OpenSans-Regular, sans-serif;
+    font-size: .9rem;
+    color: $labelColor;
+    margin: .25rem 0 0 0;
+
+    @include md(font-size, 1.6vw);
+  }
+}
+
+.dateLine{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 2rem 0;
+
+  @include md(margin, 2vw 0);
+
+  &__title{
+    // border: 1px solid red;
+    font-family: OpenSans-Regular, sans-serif;
+    font-size: .9rem;
+    color: $labelColor;
+    margin: 0;
+    width: 6rem;
+
+    @include md-block{
+      font-size: 1.6vw;
+      width: 10vw;
+    };
+
+    @include sm-block{
+      font-size: 1.6vw;
+      width: 11vw;
+    };
+  }
+
+  &__date{
+    font-family: OpenSans-Regular, sans-serif;
+    font-size: .9rem;
+    color: $textColor;
+    margin: 0;
+
+    @include md(font-size, 1.6vw);
+  }
+}
