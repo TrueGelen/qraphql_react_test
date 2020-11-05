@@ -2,6 +2,8 @@
 
 ## To use you should do
 
+[First of all you need to install server from here](https://github.com/saneksa/graphql-test-authorization)
+
 Clone the project repository
 
 ```bash
