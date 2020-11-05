@@ -14,6 +14,7 @@ html{
   }
 
   @include xs(font-size, 2.6vw);
+  @include xxs(font-size, 3.5vw);
 }
 
 menu, h1, h2, ul, li{

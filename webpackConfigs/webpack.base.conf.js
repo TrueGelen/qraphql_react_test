@@ -30,9 +30,7 @@ module.exports = {
   resolve: {
     alias: {
       '~': path.resolve(__dirname, 'src/js'),
-      '~c': path.resolve(__dirname, 'src/js/components'),
-      '~p': path.resolve(__dirname, 'src/js/containers'),
-      '~s': path.resolve(__dirname, 'src/js/store')
+      '~c': path.resolve(__dirname, 'src/js/components')
     }
   },
   optimization: {
@@ -77,7 +75,9 @@ module.exports = {
         loader: 'file-loader',
         options: {
           name: '[folder]/[name].[ext]',
-          outputPath: `../${PATHS.static}/fonts/`
+          // outputPath: `../${PATHS.static}/fonts/`
+          outputPath: `${PATHS.static}/fonts/`,
+          publicPath: `../${PATHS.static}/fonts/`
         }
       },
       {
@@ -163,7 +163,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: `${PATHS.src}/imgs`, to: `${PATHS.static}/imgs` },
-        { from: `${PATHS.src}/fonts`, to: `${PATHS.static}/fonts` },
+        // { from: `${PATHS.src}/fonts`, to: `${PATHS.static}/fonts` },
         // { from: `${PATHS.src}/static`, to: '' },
       ]
     }),

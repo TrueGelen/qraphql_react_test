@@ -16,7 +16,7 @@ $labelColor: #999999;
   padding: .9rem 1.75rem 2.6rem 1.75rem;
 
   @include lg(padding, .9rem 1.75rem 1.75rem 1.75rem);
-  @include md(padding, 15px);
+  @include md(padding, 20px 15px);
 }
 
 .header{
@@ -90,6 +90,10 @@ $labelColor: #999999;
   margin-top: 1.5rem;
 
   @include md(margin-top, 2vw);
+  @include xs-block{
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
 
   &__item{
     margin-left: 3rem;
@@ -129,7 +133,7 @@ $labelColor: #999999;
       }
     }
 
-    @include md-block{
+    @include sm-block{
       margin-left: 10px;
 
       &:first-child{
@@ -139,6 +143,39 @@ $labelColor: #999999;
 
       &:nth-child(2){
         margin-left: 10px;
+      }
+    }
+
+    @include xs-block{
+      width: 50%;
+      // display: flex;
+      // justify-content: center;
+      margin: 15px 0 0 0;
+
+      &:first-child{
+        // border: 1px solid red;
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 0px;
+        order: 0;
+      }
+
+      &:nth-child(2){
+        // border: 1px solid blue;
+        margin-left: 0 !important;
+        order: 2;
+      }
+  
+      &:nth-child(3){
+        margin-left: 0 !important;
+        order: 3;
+      }
+
+      &:last-child{
+        // border: 1px solid red;
+        order: 1;
+        margin-top: 0;
+        margin-left: 0;
       }
     }
   }
@@ -185,6 +222,7 @@ $labelColor: #999999;
 
     @include lg(font-size, 1rem);
     @include md(font-size, 1.8vw);
+    @include xs(font-size, 2.5vw);
   }
 
   &__label{
@@ -194,6 +232,7 @@ $labelColor: #999999;
     margin: .25rem 0 0 0;
 
     @include md(font-size, 1.6vw);
+    @include xs(font-size, 2vw);
   }
 }
 
@@ -222,6 +261,8 @@ $labelColor: #999999;
       font-size: 1.6vw;
       width: 11vw;
     };
+
+    @include xs(font-size, 2.5vw);
   }
 
   &__date{
@@ -231,5 +272,6 @@ $labelColor: #999999;
     margin: 0;
 
     @include md(font-size, 1.6vw);
+    @include xs(font-size, 2.5vw);
   }
 }

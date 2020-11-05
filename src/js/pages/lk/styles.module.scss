@@ -20,6 +20,7 @@
     margin: 0;
 
     @include sm(font-size, 1.5rem);
+    @include xs(line-height, 1.5);
   }
 }
 
@@ -33,6 +34,8 @@
     display: flex;
     align-items: center;
     margin: .8rem 0;
+
+    @include sm(justify-content, space-between);
   }
 
   &__label{
@@ -42,13 +45,13 @@
     width: 25%;
     margin: 0;
 
-    @include sm(width, 35%);
+    @include sm(width, auto);
   }
 
   &__inp{
     width: 32%;
     margin: 0;
 
-    @include sm(width, 60%);
+    @include sm(min-width, 60%);
   }
 }

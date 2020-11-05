@@ -18,6 +18,7 @@ import mainStyles from '../../scss/main.module.scss'
 /* other */
 import { routes, routesMap } from '../routes'
 import {
+  errorShow,
   errorHide,
   login
 } from '../Redux/actionCreators'
@@ -64,6 +65,14 @@ function App(props) {
     />
   })
 
+  let serverErr = null
+  if (error) {
+    if (error.networkError)
+      serverErr = error.networkError.statusCode
+    else
+      serverErr = null
+  }
+
   return (
     <Router>
       <>
@@ -71,7 +80,7 @@ function App(props) {
           :
           <>
             {
-              !isAuthorized ?
+              !isAuthorized && !serverErr ?
                 <>
                   <Redirect
                     to={{
@@ -94,9 +103,17 @@ function App(props) {
                   </header>
                   {/* content */}
                   <main className={md.content}>
-                    <Switch>
-                      {routesComponents}
-                    </Switch>
+                    {
+                      !serverErr ?
+                        <Switch>
+                          {routesComponents}
+                        </Switch>
+                        :
+                        <p className={md.badRequest}>
+                          Не удалось получить ответ от сервера :(<br />
+                          Попробуйте позже...
+                          </p>
+                    }
                   </main>
                 </>
             }
@@ -145,7 +162,6 @@ function App(props) {
           onClose={() => { dispatch(errorHide()) }}
           isError={errStore.isError}
         />
-
       </>
     </Router >
   )

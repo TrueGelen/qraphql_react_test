@@ -24,13 +24,19 @@
 
   & > img{
     width: 1.2rem;
-    height: 1.2rem;
+
+    @include xs(width, 24px);
   }
 
   & > p {
     font-family: OpenSans-Regular;
     font-size: 1rem;
     margin: 0 0 0 .5rem;
+
+    @include xs-block{
+      font-size: 16px;
+      margin-left: 10px;
+    }
 	}
 	
 	&_invisible{
@@ -63,7 +69,11 @@
 .menuLeftPart{
 	width: 15.7rem;
 	height: 100%;
-	background-color: rgb(64, 64, 100);
+  background-color: rgb(64, 64, 100);
+  
+  @include xs-block{
+    width: 100%;
+  }
 }
 
 .menuRightPart{
@@ -104,6 +114,8 @@
 
     & > img {
       width: 1.5rem;
+
+      @include xs(width, 24px);
     }
 
     & > p{
@@ -111,6 +123,11 @@
       color: inherit;
       font-size: 1rem;
       margin: 0 0 0 .6rem;
+
+      @include xs-block{
+        font-size: 16px;
+        margin-left: 10px;
+      };
     }
 
     &_active{
@@ -118,4 +135,12 @@
       background-color: rgb(79, 79, 133);
     }
   }		
+}
+
+.badRequest{
+  font-family: OpenSans-Regular, sans-serif;
+  padding: 30px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.5;
 }

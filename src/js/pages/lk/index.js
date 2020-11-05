@@ -241,7 +241,7 @@ function LKPage(props) {
                 onChange={(e) => { onChange(e.target.value, "email") }} />
             </li>
             <li className={md.userData__item}>
-              <label className={md.userData__label}>Новый(или старый) пароль</label>
+              <label className={md.userData__label}>Новый (или старый) пароль</label>
               <PasswordInp
                 className={md.userData__inp}
                 disabled={editLoading}
