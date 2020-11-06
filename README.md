@@ -1,4 +1,4 @@
-# test for infomaximum
+# React+Redux+GraphQL
 
 ## To use you should do
 
