@@ -6,7 +6,11 @@
   background-color: white;
   box-shadow: 0px .1vw .5vw rgba(104, 121, 187, 0.1);
 
-  padding: 1rem 1.5rem;
+	padding: 1rem 1.5rem;
+	
+	& > div{
+		display: inline-block;
+	}
 }
 
 .content{
@@ -14,13 +18,11 @@
 }
 
 .btnMenu{
+	// border: 1px solid red;
   display: flex;
-  align-items: center;
+	align-items: center;
+	justify-content: flex-start;
   cursor: pointer;
-
-  @include md-block{
-    cursor: default;
-  }
 
   & > img{
     width: 1.2rem;
@@ -29,6 +31,7 @@
   }
 
   & > p {
+		// border: 1px solid blue;
     font-family: OpenSans-Regular;
     font-size: 1rem;
     margin: 0 0 0 .5rem;

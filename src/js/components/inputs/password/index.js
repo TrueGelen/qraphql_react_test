@@ -1,5 +1,5 @@
 /* lib */
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import PropTypes from 'prop-types'
 
 /* styles */
@@ -9,71 +9,73 @@ import md from './styles.module.scss'
 import { baseUrl } from '../../../Redux/constants'
 
 /* code */
-export default function PasswordInp({
-  value,
-  // type,
-  name,
-  placeholder,
-  onChange,
-  className,
-  isValid,
-  disabled,
-  errMessage,
-  showPassword,
-  ...props
+function PasswordInp({
+	value,
+	// type,
+	name,
+	placeholder,
+	onChange,
+	className,
+	isValid,
+	disabled,
+	errMessage,
+	showPassword,
+	...props
 }) {
-  const [showPas, setShowPas] = useState(showPassword)
+	const [showPas, setShowPas] = useState(showPassword)
 
-  let path = showPas ?
-    `${baseUrl}assets/imgs/password_visible.png` :
-    `${baseUrl}assets/imgs/password_invisible.png`
+	let path = showPas ?
+		`${baseUrl}assets/imgs/password_visible.png` :
+		`${baseUrl}assets/imgs/password_invisible.png`
 
-  const showPasswordHandle = () => setShowPas(!showPas)
+	const showPasswordHandle = () => setShowPas(!showPas)
 
-  return (
-    <div className={`${md.wrap} ${className}`}>
-      <div className={`${md.inpWrap}`}>
-        <input
-          className={`${isValid ? md.inp : md.err}`}
-          type={showPas ? "text" : "password"}
-          name={name}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          disabled={disabled}
-        />
-        <img
-          src={path}
-          className={`${md.logo}`}
-          onClick={showPasswordHandle} />
-      </div>
-      <p
-        className={`${md.errMessage} ${isValid && md.invisible}`}
-      >{errMessage == "" ? "Текст для высоты" : errMessage}</p>
-    </div>
-  )
+	return (
+		<div className={`${md.wrap} ${className}`}>
+			<div className={`${md.inpWrap}`}>
+				<input
+					className={`${isValid ? md.inp : md.err}`}
+					type={showPas ? "text" : "password"}
+					name={name}
+					placeholder={placeholder}
+					value={value}
+					onChange={e => { onChange(e) }}
+					disabled={disabled}
+				/>
+				<img
+					src={path}
+					className={`${md.logo}`}
+					onClick={showPasswordHandle} />
+			</div>
+			<p
+				className={`${md.errMessage} ${isValid && md.invisible}`}
+			>{errMessage == "" ? "Текст для высоты" : errMessage}</p>
+		</div>
+	)
 }
 
 PasswordInp.defaultProps = {
-  value: '',
-  // type: 'text',
-  name: '',
-  placeholder: '',
-  onChange: () => { },
-  className: null,
-  isValid: true,
-  disabled: false,
-  errMessage: 'Текст для высоты'
+	value: '',
+	// type: 'text',
+	name: '',
+	placeholder: '',
+	onChange: () => { },
+	className: null,
+	isValid: true,
+	disabled: false,
+	errMessage: 'Текст для высоты'
 }
 
 PasswordInp.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  type: PropTypes.string,
-  name: PropTypes.string,
-  placeholder: PropTypes.string,
-  onChange: PropTypes.func,
-  className: PropTypes.string,
-  isValid: PropTypes.bool,
-  disabled: PropTypes.bool,
-  errMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	type: PropTypes.string,
+	name: PropTypes.string,
+	placeholder: PropTypes.string,
+	onChange: PropTypes.func,
+	className: PropTypes.string,
+	isValid: PropTypes.bool,
+	disabled: PropTypes.bool,
+	errMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }
+
+export default memo(PasswordInp)

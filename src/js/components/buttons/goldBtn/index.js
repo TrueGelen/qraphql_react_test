@@ -1,9 +1,9 @@
-import React, { Children } from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
 import md from './index.module.scss'
 
-export default function Button({
+function Button({
 	className,
 	onClick,
 	type,
@@ -27,6 +27,8 @@ export default function Button({
 		</input>
 	)
 }
+
+export default memo(Button)
 
 Button.defaultProps = {
 	type: "button",

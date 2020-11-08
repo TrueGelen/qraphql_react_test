@@ -1,5 +1,5 @@
 /* lib */
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 /* components */
@@ -8,33 +8,27 @@ import PropTypes from 'prop-types'
 import moduleStyles from './styles.module.scss'
 
 export default function PageLayout({
-  className,
-  form,
-  ...props }) {
+	className,
+	...props }) {
 
-  return (
-    <>
-      <div className={moduleStyles.pageWrapper}>
-        <img
-          className={moduleStyles.logo}
-          src="/assets/imgs/proceset_logo.png" />
+	return (
+		<div className={moduleStyles.pageWrapper}>
+			<img
+				className={moduleStyles.logo}
+				src="/assets/imgs/proceset_logo.png" />
 
-        <div className={moduleStyles.formWrapper}>
-          {form}
-          {props.children}
-        </div>
+			<div className={moduleStyles.formWrapper}>
+				{props.children}
+			</div>
 
-      </div>
-    </>
-  )
+		</div>
+	)
 }
 
 PageLayout.defaultProps = {
-  className: undefined,
-  form: []
+	className: undefined
 }
 
 PageLayout.propTypes = {
-  className: PropTypes.string,
-  form: PropTypes.node
+	className: PropTypes.string
 }
