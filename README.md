@@ -16,7 +16,7 @@ Then
 npm i 
 ```
 
-And then to build project in dev mod u should use (it will be placed on 8080 port)
+And then to build project in dev mod u should use (it will be placed on localhost:8080)
 
 ```bash
 npm run dev
