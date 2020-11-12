@@ -6,23 +6,22 @@ import {
   useQuery,
   gql
 } from '@apollo/client';
-
 /* components */
 import NoticeError from '../components/errors/notice'
 import LoadingSpinner from '../components/loadingSpinner'
-
 /* styles */
 import md from './app.module.scss'
 import mainStyles from '../../scss/main.module.scss'
-
 /* other */
 import { routes, routesMap } from '../routes'
 import {
-  errorShow,
   errorHide,
   login
 } from '../Redux/actionCreators'
-import { baseUrl } from '../Redux/constants'
+/* imgs */
+import menu_icon_png from '../../img/menu.png'
+import user_icon_png from '../../img/user_icon.png'
+import process_icon_png from '../../img/process_icon.png'
 
 const CURRENT_USER = gql`
 	query{
@@ -98,7 +97,7 @@ function App(props) {
                     <div>
                       <div className={`${md.btnMenu} ${menu && md.btnMenu_invisible}`}
                         onClick={openMenu}>
-                        <img src={`${baseUrl}assets/imgs/menu.png`} />
+                        <img src={menu_icon_png} />
                         <p>Меню</p>
                       </div>
                     </div>
@@ -127,7 +126,7 @@ function App(props) {
           <menu className={`${md.menuLeftPart} ${menu && md.menuLeftPart_show}`}>
             <div className={`${md.btnMenu} ${md.btnMenu_opened}`}
               onClick={hideMenu}>
-              <img src={`${baseUrl}assets/imgs/menu.png`} />
+              <img src={menu_icon_png} />
               <p>proceset</p>
             </div>
             <ul className={md.menu}>
@@ -137,7 +136,7 @@ function App(props) {
                   to={routesMap.lk}
                   activeClassName={md.menu__link_active}
                   onClick={hideMenu}>
-                  <img src={`${baseUrl}assets/imgs/user_icon.png`} />
+                  <img src={user_icon_png} />
                   <p>Профиль</p>
                 </NavLink>
               </li>
@@ -147,7 +146,7 @@ function App(props) {
                   to={routesMap.processes}
                   activeClassName={md.menu__link_active}
                   onClick={hideMenu}>
-                  <img src={`${baseUrl}assets/imgs/process_icon.png`} />
+                  <img src={process_icon_png} />
                   <p>Список процессов</p>
                 </NavLink>
               </li>

@@ -71,20 +71,28 @@ module.exports = {
         }
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'file-loader',
         options: {
           name: '[folder]/[name].[ext]',
-          // outputPath: `../${PATHS.static}/fonts/`
           outputPath: `${PATHS.static}/fonts/`,
           publicPath: `../${PATHS.static}/fonts/`
         }
       },
       {
-        test: /\.(png|jpg|gif|svg|webp)$/,
+        test: /\.(svg)$/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]'
+          name: '[name].[ext]',
+          outputPath: `${PATHS.static}/svg/`,
+        }
+      },
+      {
+        test: /\.(png|jpg|gif|webp)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: `${PATHS.static}/img/`,
         }
       },
       {
@@ -160,13 +168,13 @@ module.exports = {
       filename: 'index.html',
       inject: true
     }),
-    new CopyPlugin({
-      patterns: [
-        { from: `${PATHS.src}/imgs`, to: `${PATHS.static}/imgs` },
-        // { from: `${PATHS.src}/fonts`, to: `${PATHS.static}/fonts` },
-        // { from: `${PATHS.src}/static`, to: '' },
-      ]
-    }),
+    // new CopyPlugin({
+    // patterns: [
+    // { from: `${PATHS.src}/imgs`, to: `${PATHS.static}/imgs` },
+    // { from: `${PATHS.src}/fonts`, to: `${PATHS.static}/fonts` },
+    // { from: `${PATHS.src}/static`, to: '' },
+    // ]
+    // }),
     new MomentLocalesPlugin({
       localesToKeep: ['es-us', 'ru'],
     }),

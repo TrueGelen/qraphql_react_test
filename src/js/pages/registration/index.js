@@ -85,9 +85,9 @@ export default function RegistrationPage(props) {
     }
   })
 
-  const onChange = useCallback((e) => {
-    const value = e.target.value
-    const name = e.target.name
+  const onChange = useCallback((e, val, field) => {
+    const value = e ? e.target.value : val
+    const name = e ? e.target.name : field
     setState(prevState => {
       const isValid = prevState[name].validate(value, prevState)
       return {
@@ -110,30 +110,25 @@ export default function RegistrationPage(props) {
       let response = await singup({ variables: { firstName, secondName, email, password } })
       let token = response.data.signup
       window.localStorage.setItem("token", token)
-      // props.history.push("/")
       props.history.go(0)
     } catch (e) {
-      // console.log("catch")
-      // dispatch(errorShow("Что то пошло не так :(\r\n Попробуйте позже"))
+      //ошибка обработана в шаблоне
     }
   }
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault()
     const fields = Object.keys(state)
     if (fields.every(field => state[field].value !== '' && state[field].isValid)) {
       makeRequestAndLogin()
-      return state
     } else {
-      fields.forEach(field => onChange(state[field].value, field))
+      fields.forEach(field => onChange(null, state[field].value, field))
     }
   }
 
   const form = <form
     className={md.form}
-    onSubmit={(e) => {
-      e.preventDefault()
-      onSubmit()
-    }}>
+    onSubmit={onSubmit}>
     <Input
       disabled={loading}
       value={state.firstName.value}

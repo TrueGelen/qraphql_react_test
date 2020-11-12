@@ -1,4 +1,4 @@
-/* lib */
+/* libs */
 import React from 'react'
 import {
   useQuery,
@@ -10,12 +10,6 @@ import PageLayout from '../../components/pageLayouts/layout2'
 import LoadingSpinner from '../../components/loadingSpinner'
 import LineCard from '../../components/cards/lineCard'
 import AError from '../../components/errors/error'
-
-/* other */
-// import { urlBuilder } from '../../routes'
-import {
-} from '../../Redux/actionCreators'
-
 /* styles */
 import md from './styles.module.scss'
 
@@ -39,8 +33,6 @@ const PROCESS_LIST = gql`
 `;
 
 function ProcessesPage(props) {
-  // console.log('ProcessesPage')
-
   const { loading, error, data = null } = useQuery(PROCESS_LIST);
 
   if (error) {
@@ -51,8 +43,6 @@ function ProcessesPage(props) {
 
   const processList = data ? data.processList : null
   let cards = null
-
-  // console.log("processList", processList)
 
   if (processList) {
 

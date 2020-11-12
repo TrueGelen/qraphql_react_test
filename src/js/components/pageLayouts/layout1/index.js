@@ -1,34 +1,34 @@
-/* lib */
+/* libs */
 import React from 'react'
 import PropTypes from 'prop-types'
-
 /* components */
-
 /* styles */
-import moduleStyles from './styles.module.scss'
+import md from './styles.module.scss'
+/* imgs */
+import proceset_logo_png from '../../../../img/proceset_logo.png'
 
 export default function PageLayout({
-	className,
-	...props }) {
+  className,
+  ...props }) {
 
-	return (
-		<div className={moduleStyles.pageWrapper}>
-			<img
-				className={moduleStyles.logo}
-				src="/assets/imgs/proceset_logo.png" />
+  return (
+    <div className={md.pageWrapper}>
+      <img
+        className={md.logo}
+        src={proceset_logo_png} />
 
-			<div className={moduleStyles.formWrapper}>
-				{props.children}
-			</div>
+      <div className={md.formWrapper}>
+        {props.children}
+      </div>
 
-		</div>
-	)
+    </div>
+  )
 }
 
 PageLayout.defaultProps = {
-	className: undefined
+  className: undefined
 }
 
 PageLayout.propTypes = {
-	className: PropTypes.string
+  className: PropTypes.string
 }

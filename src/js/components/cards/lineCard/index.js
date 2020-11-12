@@ -1,13 +1,18 @@
 /* lib */
-import React from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-/* other */
-import { baseUrl } from '../../../Redux/constants'
+/* img */
+import chevrone_right_png from '../../../../img/processCard/chevrone_right.png'
+import clock_png from '../../../../img/processCard/clock.png'
+import load_png from '../../../../img/processCard/load.png'
+import timer_png from '../../../../img/processCard/timer.png'
+import tree_png from '../../../../img/processCard/tree.png'
+import users_png from '../../../../img/processCard/users.png'
 /* styles */
 import md from './LineCard.module.scss'
 
-export default function LineCard({
+function LineCard({
   className,
   onClick,
   data,
@@ -28,18 +33,19 @@ export default function LineCard({
 
   return (
     <div className={`${md.card} ${className}`}>
+      {/* {console.log(`=======LineCard=======`)} */}
       <div className={md.header}>
         <h3 className={md.header__title}>{name}</h3>
         {
           link ?
             <Link className={md.header__link} to={link}>
               <p>На карту процесса</p>
-              <img src={`${baseUrl}assets/imgs/processCard/chevrone_right.png`} />
+              <img src={chevrone_right_png} />
             </Link>
             :
             <a className={`${md.header__link} ${md.header__link_disabled}`}>
               <p>На карту процесса</p>
-              <img src={`${baseUrl}assets/imgs/processCard/chevrone_right.png`} />
+              <img src={chevrone_right_png} />
             </a>
         }
       </div>
@@ -47,7 +53,7 @@ export default function LineCard({
         <div className={md.body__item}>
           <div className={md.dataCell}>
             <img className={md.dataCell__icon}
-              src={`${baseUrl}assets/imgs/processCard/load.png`} />
+              src={load_png} />
             <div className={md.dataCell__data}>
               <p className={`${md.dataCell__title} ${md.dataCell__title_numberOfExecutions}`}>
                 {numberOfExecutions}
@@ -61,7 +67,7 @@ export default function LineCard({
         <div className={md.body__item}>
           <div className={md.dataCell}>
             <img className={md.dataCell__icon}
-              src={`${baseUrl}assets/imgs/processCard/clock.png`} />
+              src={clock_png} />
             <div className={md.dataCell__data}>
               <p className={md.dataCell__title}>
                 {averageLeadTime}
@@ -73,7 +79,7 @@ export default function LineCard({
           </div>
           <div className={md.dataCell}>
             <img className={md.dataCell__icon}
-              src={`${baseUrl}assets/imgs/processCard/timer.png`} />
+              src={timer_png} />
             <div className={md.dataCell__data}>
               <p className={md.dataCell__title}>
                 {averageActiveTime}
@@ -87,7 +93,7 @@ export default function LineCard({
         <div className={md.body__item}>
           <div className={md.dataCell}>
             <img className={md.dataCell__icon}
-              src={`${baseUrl}assets/imgs/processCard/users.png`} />
+              src={tree_png} />
             <div className={md.dataCell__data}>
               <p className={md.dataCell__title}>
                 {employeesInvolvedProcess}
@@ -99,7 +105,7 @@ export default function LineCard({
           </div>
           <div className={md.dataCell}>
             <img className={md.dataCell__icon}
-              src={`${baseUrl}assets/imgs/processCard/tree.png`} />
+              src={users_png} />
             <div className={md.dataCell__data}>
               <p className={md.dataCell__title}>
                 {numberOfScenarios}
@@ -128,6 +134,8 @@ export default function LineCard({
     </div>
   )
 }
+
+export default memo(LineCard)
 
 LineCard.defaultProps = {
   className: undefined,
