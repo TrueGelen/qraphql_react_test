@@ -35,7 +35,6 @@ const CURRENT_USER = gql`
 `;
 
 function App(props) {
-  // console.log("App")
   const [menu, setMenu] = useState(false)
   const { loading, error, data = null } = useQuery(CURRENT_USER);
 

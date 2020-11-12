@@ -33,7 +33,6 @@ function LineCard({
 
   return (
     <div className={`${md.card} ${className}`}>
-      {/* {console.log(`=======LineCard=======`)} */}
       <div className={md.header}>
         <h3 className={md.header__title}>{name}</h3>
         {

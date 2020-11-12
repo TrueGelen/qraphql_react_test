@@ -1,5 +1,5 @@
 /* libs */
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   useQuery,
   gql
@@ -33,7 +33,7 @@ const PROCESS_LIST = gql`
 `;
 
 function ProcessesPage(props) {
-  const { loading, error, data = null } = useQuery(PROCESS_LIST);
+  const { loading, error, data } = useQuery(PROCESS_LIST);
 
   if (error) {
     return <PageLayout className={md.layout}>
@@ -41,54 +41,55 @@ function ProcessesPage(props) {
     </PageLayout>
   }
 
-  const processList = data ? data.processList : null
-  let cards = null
+  let cards = useMemo(() => {
+    if (data) {
 
-  if (processList) {
+      return data.processList.map(proc => {
+        let {
+          id,
+          averageLeadTime,
+          averageActiveTime,
+          start,
+          end,
+          loading,
+          numberOfExecutions,
+          numberOfScenarios,
+          name,
+          employeesInvolvedProcess
+        } = proc
+        let dataToCard = {}
 
-    cards = processList.map(proc => {
-      let {
-        id,
-        averageLeadTime,
-        averageActiveTime,
-        start,
-        end,
-        loading,
-        numberOfExecutions,
-        numberOfScenarios,
-        name,
-        employeesInvolvedProcess
-      } = proc
-      let dataToCard = {}
+        const f1 = moment.utc(Number(averageLeadTime)).format('HH:mm').split(":");
+        const f2 = moment.utc(Number(averageActiveTime)).format('HH:mm').split(":");
+        averageActiveTime = `${f2[0]}ч ${f2[1]} мин (${(averageActiveTime / averageLeadTime * 100).toFixed(1)}%)`
+        averageLeadTime = `${f1[0]}ч ${f1[1]} мин`
 
-      const f1 = moment.utc(Number(averageLeadTime)).format('HH:mm').split(":");
-      const f2 = moment.utc(Number(averageActiveTime)).format('HH:mm').split(":");
-      averageActiveTime = `${f2[0]}ч ${f2[1]} мин (${(averageActiveTime / averageLeadTime * 100).toFixed(1)}%)`
-      averageLeadTime = `${f1[0]}ч ${f1[1]} мин`
+        start = moment.unix(Number(start)).format("DD MMMM YYYY");
+        end = moment.unix(Number(end)).format("DD MMMM YYYY");
+        loading = moment.unix(Number(loading)).format("DD MMMM YYYY");
+        numberOfExecutions = numberOfExecutions.toLocaleString('ru')
 
-      start = moment.unix(Number(start)).format("DD MMMM YYYY");
-      end = moment.unix(Number(end)).format("DD MMMM YYYY");
-      loading = moment.unix(Number(loading)).format("DD MMMM YYYY");
-      numberOfExecutions = numberOfExecutions.toLocaleString('ru')
+        const f7 = numberOfScenarios.toLocaleString('ru')
+        numberOfScenarios = `${f7} сценариев`
+        const f9 = employeesInvolvedProcess.toLocaleString('ru')
+        employeesInvolvedProcess = `${f9} сотрудников`
 
-      const f7 = numberOfScenarios.toLocaleString('ru')
-      numberOfScenarios = `${f7} сценариев`
-      const f9 = employeesInvolvedProcess.toLocaleString('ru')
-      employeesInvolvedProcess = `${f9} сотрудников`
+        dataToCard = {
+          averageLeadTime,
+          averageActiveTime,
+          start, end, loading,
+          numberOfExecutions,
+          numberOfScenarios,
+          name,
+          employeesInvolvedProcess
+        }
 
-      dataToCard = {
-        averageLeadTime,
-        averageActiveTime,
-        start, end, loading,
-        numberOfExecutions,
-        numberOfScenarios,
-        name,
-        employeesInvolvedProcess
-      }
-
-      return <LineCard key={id} data={dataToCard} />
-    })
-  }
+        return <LineCard key={id} data={dataToCard} />
+      })
+    } else {
+      return null
+    }
+  }, [data])
 
   return (
     <PageLayout className={md.layout}>

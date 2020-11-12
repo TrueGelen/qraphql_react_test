@@ -29,8 +29,6 @@ const LOGIN = gql`
 `;
 
 export default function LogInPage(props) {
-  // console.log('LogInPage')
-
   const [loginRequest, { data, error, loading }] = useMutation(LOGIN)
 
   const dispatch = useDispatch()

@@ -24,8 +24,6 @@ const SINGUP = gql`
 `;
 
 export default function RegistrationPage(props) {
-  // console.log('RegistrationPage')
-
   const [singup, { data, loading, error }] = useMutation(SINGUP)
 
   const isAuthorized = useSelector(state => state.user.isAuthorized)

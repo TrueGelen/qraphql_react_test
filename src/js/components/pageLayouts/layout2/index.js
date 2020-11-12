@@ -1,24 +1,21 @@
 /* lib */
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-
-/* components */
-
 /* styles */
-import moduleStyles from './styles.module.scss'
+import md from './styles.module.scss'
 
-export default function PageLayout({
+function PageLayout({
   className,
   ...props }) {
 
   return (
-    <>
-      <div className={`${moduleStyles.layout} ${className}`}>
-        {props.children}
-      </div>
-    </>
+    <div className={`${md.layout} ${className}`}>
+      {props.children}
+    </div>
   )
 }
+
+export default memo(PageLayout)
 
 PageLayout.defaultProps = {
   className: undefined
