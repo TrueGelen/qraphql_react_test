@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
 import { useMutation, gql } from '@apollo/client';
 /* components */
-import PageLayout from '../../components/pageLayouts/layout1'
+import PageLayout from '../../components/pageLayouts/unauthorizedPageLayout'
 import Input from '../../components/inputs/mainInput'
 import PasswordInp from '../../components/inputs/password'
 import Button from '../../components/buttons/goldBtn'

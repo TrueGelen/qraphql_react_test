@@ -6,7 +6,7 @@ import {
 } from '@apollo/client';
 import moment from 'moment'
 /* components */
-import PageLayout from '../../components/pageLayouts/layout2'
+import PageLayout from '../../components/pageLayouts/layout'
 import LoadingSpinner from '../../components/loadingSpinner'
 import LineCard from '../../components/cards/lineCard'
 import AError from '../../components/errors/error'

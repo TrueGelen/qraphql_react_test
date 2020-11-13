@@ -1,7 +1,7 @@
 /* libs */
 import React from 'react'
 import ReactDom from 'react-dom'
-import { Provider, useDispatch } from 'react-redux'
+import { Provider } from 'react-redux'
 import {
   ApolloClient,
   InMemoryCache,
@@ -10,7 +10,6 @@ import {
   ApolloLink,
   concat
 } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
 /* styles */
 import '../node_modules/normalize.css/normalize.css'
 import commonStyles from './scss/main.module.scss'
@@ -34,11 +33,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: concat(authMiddleware, httpLink),
 });
-
-// const client = new ApolloClient({
-//   uri: 'http://localhost:4000/api',
-//   cache: new InMemoryCache()
-// });
 
 ReactDom.render(
   <Provider store={store}>

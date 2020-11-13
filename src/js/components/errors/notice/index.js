@@ -1,12 +1,10 @@
 /* lib */
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-
 /* styles */
 import moduleStyles from './styles.module.scss'
-
 /* code */
-export default function NoticeError({ text, onClose, isError, ...props }) {
+function NoticeError({ text, onClose, isError, ...props }) {
 
   let errMessage = text === '' ? 'Ошибка не передана или не известна!' : text
 
@@ -23,6 +21,8 @@ export default function NoticeError({ text, onClose, isError, ...props }) {
     </div>
   )
 }
+
+export default memo(NoticeError)
 
 NoticeError.defaultProps = {
   text: 'Ошибка не передана или не известна!'

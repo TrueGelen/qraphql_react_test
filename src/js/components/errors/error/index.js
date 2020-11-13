@@ -1,5 +1,5 @@
 /* libs */
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 /* imgs */
 import danger_png from '../../../../img/danger.png'
@@ -7,7 +7,7 @@ import danger_png from '../../../../img/danger.png'
 import md from './styles.module.scss'
 
 /* code */
-export default function AError({ text, onClose, className, ...props }) {
+function AError({ text, onClose, className, ...props }) {
 
   let errMessage = text === '' ? 'Ошибка не передана или не известна!' : text
 
@@ -18,6 +18,8 @@ export default function AError({ text, onClose, className, ...props }) {
     </div>
   )
 }
+
+export default memo(AError)
 
 AError.defaultProps = {
   className: null,

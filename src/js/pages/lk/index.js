@@ -1,42 +1,20 @@
 /* lib */
 import React, { useState, useCallback } from 'react'
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux'
-
 /* components */
-import PageLayout from '../../components/pageLayouts/layout2'
+import PageLayout from '../../components/pageLayouts/layout'
 import Button from '../../components/buttons/goldBtn'
 import Input from '../../components/inputs/mainInput'
 import PasswordInp from '../../components/inputs/password'
 import LoadingSpinner from '../../components/loadingSpinner'
-
 /* other */
-// import { urlBuilder } from '../../routes'
 import {
   errorShow
 } from '../../Redux/actionCreators'
-
+import { GET_USER_BY_ID, EDIT_USER } from './queries'
 /* styles */
 import md from './styles.module.scss'
-
-const GET_USER_BY_ID = gql`
-  query($id: Int!){
-    userById(id: $id){
-      id,
-      firstName,
-      secondName,
-      email
-    }
-  }
-`;
-
-const EDIT_USER = gql`
-	mutation($id: Int!, $firstName: String!, $secondName: String!, $email: String!, $password: String!){
-		editUser(id: $id, firstName:$firstName, secondName: $secondName, email: $email, password:$password){
-      id
-    }
-	}
-`;
 
 function LKPage(props) {
   const dispatch = useDispatch()
@@ -45,6 +23,7 @@ function LKPage(props) {
   const { loading: GUBILoading, error: GUBIErrore, data: GUBIData } = useQuery(GET_USER_BY_ID, {
     variables: { id },
   });
+
   const [editUser, {
     loading: editLoading,
     error: editErrore,
@@ -144,6 +123,7 @@ function LKPage(props) {
       setIsLoaded(true)
     }
   }
+
   if (!GUBILoading && !isLoaded) { updateStateOnGetData() }
 
   const makeRequestOnEditUser = async (_formState) => {

@@ -1,13 +1,12 @@
 /* libs */
 import React from 'react'
 import PropTypes from 'prop-types'
-/* components */
 /* styles */
 import md from './styles.module.scss'
 /* imgs */
 import proceset_logo_png from '../../../../img/proceset_logo.png'
 
-export default function PageLayout({
+export default function UnauthorizedPageLayout({
   className,
   ...props }) {
 
@@ -25,10 +24,10 @@ export default function PageLayout({
   )
 }
 
-PageLayout.defaultProps = {
+UnauthorizedPageLayout.defaultProps = {
   className: undefined
 }
 
-PageLayout.propTypes = {
+UnauthorizedPageLayout.propTypes = {
   className: PropTypes.string
 }
