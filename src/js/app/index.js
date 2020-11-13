@@ -51,7 +51,6 @@ function App(props) {
   }, [])
 
   const routesComponents = useMemo(() => {
-    console.log("counting")
     return routes.map((route) => {
       return <Route path={route.url}
         component={route.container}

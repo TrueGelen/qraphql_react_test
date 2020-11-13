@@ -2,7 +2,7 @@
 import React, { useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 /* components */
 import PageLayout from '../../components/pageLayouts/unauthorizedPageLayout'
 import Input from '../../components/inputs/mainInput'
@@ -14,19 +14,9 @@ import { routesMap } from '../../routes'
 import {
   login
 } from '../../Redux/actionCreators'
+import { LOGIN } from './queries'
 /* styles */
 import md from './styles.module.scss'
-
-const LOGIN = gql`
-  mutation ($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-			token,
-			user {
-				id
-			}
-    }
-  }
-`;
 
 export default function LogInPage(props) {
   const [loginRequest, { data, error, loading }] = useMutation(LOGIN)
