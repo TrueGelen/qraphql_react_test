@@ -1,5 +1,5 @@
 /* lib */
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux'
 /* components */
@@ -20,14 +20,15 @@ function LKPage(props) {
   const dispatch = useDispatch()
   const id = useSelector(state => state.user.id)
 
-  const { loading: GUBILoading, error: GUBIErrore, data: GUBIData } = useQuery(GET_USER_BY_ID, {
-    variables: { id },
-  });
+  const {
+    loading: GUBILoading,
+    error: GUBIErrore,
+    data: GUBIData
+  } = useQuery(GET_USER_BY_ID, { variables: { id } });
 
   const [editUser, {
     loading: editLoading,
-    error: editErrore,
-    data: editData
+    // ошибка и данные обрабатываются в makeRequestOnEditUser()
   }] = useMutation(EDIT_USER)
 
   if (GUBIErrore) {
@@ -38,7 +39,6 @@ function LKPage(props) {
   const { firstName = "", secondName = "", email = "" } = GUBIData ? GUBIData.userById : {}
 
   const [itWasSavedFlagForBtn, setItWasSavedFlagForBtn] = useState(false)
-  const [isLoaded, setIsLoaded] = useState(false)
   const [formState, setFormState] = useState({
     firstName: {
       value: firstName,
@@ -120,11 +120,12 @@ function LKPage(props) {
       for (let field in fieldsToUpdate) {
         onChange(fieldsToUpdate[field], field)
       }
-      setIsLoaded(true)
     }
   }
 
-  if (!GUBILoading && !isLoaded) { updateStateOnGetData() }
+  useEffect(() => {
+    updateStateOnGetData()
+  }, [GUBIData])
 
   const makeRequestOnEditUser = async (_formState) => {
     try {
