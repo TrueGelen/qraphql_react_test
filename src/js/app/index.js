@@ -62,9 +62,8 @@ function App(props) {
 
   const template = useMemo(() => {
     let jsx = null
-    if (!error) {
+    if (!error.networkError) {
       if (isAuthorized) {
-
         jsx =
           <>
             <header className={md.header}>
@@ -82,7 +81,6 @@ function App(props) {
               </Switch>
             </main>
           </>
-
       } else {
         jsx =
           <>
@@ -101,7 +99,7 @@ function App(props) {
       jsx = <p className={md.badRequest}>
         Не удалось получить ответ от сервера :(<br />
                           Попробуйте позже...
-                          </p>
+            </p>
     }
     return jsx
   }, [error, isAuthorized])
