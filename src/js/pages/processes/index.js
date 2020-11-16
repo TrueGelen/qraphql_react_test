@@ -1,9 +1,6 @@
 /* libs */
 import React, { useMemo } from 'react'
-import {
-  useQuery,
-  gql
-} from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import moment from 'moment'
 /* components */
 import PageLayout from '../../components/pageLayouts/layout'
@@ -12,32 +9,17 @@ import LineCard from '../../components/cards/lineCard'
 import AError from '../../components/errors/error'
 /* styles */
 import md from './styles.module.scss'
+/* other */
+import { PROCESS_LIST } from './queries'
 
 moment.locale('ru')
-
-const PROCESS_LIST = gql`
-  query{
-    processList{
-      id,
-      name,
-      numberOfExecutions,
-      averageLeadTime,
-      averageActiveTime,
-      employeesInvolvedProcess,
-      numberOfScenarios,
-      start,
-      end,
-      loading
-    }
-  }
-`;
 
 function ProcessesPage(props) {
   const { loading, error, data } = useQuery(PROCESS_LIST);
 
   if (error) {
     return <PageLayout className={md.layout}>
-      <AError text="Не удалось получить данные, попробуйте снова..." />
+      <AError text="Не удалось получить данные, попробуйте позже..." />
     </PageLayout>
   }
 

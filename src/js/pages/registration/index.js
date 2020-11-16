@@ -1,8 +1,8 @@
 /* lib */
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 /* components */
 import PageLayout from '../../components/pageLayouts/unauthorizedPageLayout'
 import Input from '../../components/inputs/mainInput'
@@ -11,20 +11,14 @@ import Button from '../../components/buttons/goldBtn'
 import AError from '../../components/errors/error'
 /* other */
 import { routesMap } from '../../routes'
-import {
-} from '../../Redux/actionCreators'
-
+import { SINGUP } from './queries'
 /* styles */
 import md from './styles.module.scss'
 
-const SINGUP = gql`
-	mutation($firstName: String!, $secondName: String!, $email: String!, $password: String!){
-		signup(firstName:$firstName, secondName: $secondName, email: $email, password:$password)
-	}
-`;
+
 
 export default function RegistrationPage(props) {
-  const [singup, { data, loading, error }] = useMutation(SINGUP)
+  const [singup, { loading, error }] = useMutation(SINGUP)
 
   const isAuthorized = useSelector(state => state.user.isAuthorized)
 
@@ -124,91 +118,95 @@ export default function RegistrationPage(props) {
     }
   }
 
-  const form = <form
-    className={md.form}
-    onSubmit={onSubmit}>
-    <Input
-      disabled={loading}
-      value={state.firstName.value}
-      type="text"
-      name="firstName"
-      placeholder="Имя"
-      errMessage={state.firstName.errMessage}
-      isValid={state.firstName.isValid}
-      onChange={onChange}
-    />
-    <Input
-      disabled={loading}
-      value={state.secondName.value}
-      type="text"
-      name="secondName"
-      placeholder="Фамилия"
-      errMessage={state.secondName.errMessage}
-      isValid={state.secondName.isValid}
-      onChange={onChange}
-    />
-    <Input
-      disabled={loading}
-      value={state.email.value}
-      type="email"
-      name="email"
-      placeholder="Электронная почта"
-      errMessage={state.email.errMessage}
-      isValid={state.email.isValid}
-      onChange={onChange}
-    />
-    <PasswordInp
-      disabled={loading}
-      value={state.password.value}
-      name="password"
-      placeholder="Введите пароль"
-      errMessage={state.password.errMessage}
-      isValid={state.password.isValid}
-      onChange={onChange}
-    />
-    <PasswordInp
-      disabled={loading}
-      value={state.checkPassword.value}
-      name="checkPassword"
-      placeholder="Повторите пароль"
-      errMessage={state.checkPassword.errMessage}
-      isValid={state.checkPassword.isValid}
-      onChange={onChange}
-    />
-    <Button
-      type="submit"
-      disabled={loading}
-      value={loading ? "Идет отправка на сервер..." : "Регистрация"}
-    />
-  </form>
-
-  let statusCode = null
-  if (error) {
-    if (error.networkError)
-      statusCode = error.networkError.statusCode
+  const loginLink = useMemo(() => {
+    if (loading)
+      return <p className={`${md.question}`}> Уже зарегистрированы? Вход</p>
     else
-      statusCode = error.graphQLErrors[0].statusCode
-  }
+      return <p>Уже зарегистрированы? <Link
+        className={`${md.registration}`}
+        to={routesMap.login}>Вход</Link></p>
+  }, [loading])
+
+  const errMessage = useMemo(() => {
+    if (error) {
+      let statusCode = null
+      if (error.networkError)
+        statusCode = error.networkError.statusCode
+      else
+        statusCode = error.graphQLErrors[0].statusCode
+
+      return <AError className={md.errorNotification}
+        text={statusCode === 500 ? "Такой email уже зарегистрирован."
+          : "Ошибка :( Попробуйте позже"} />
+    } else {
+      return null
+    }
+  }, [error])
+
+
   return (
     <>
       {!isAuthorized ?
         <PageLayout>
-          {form}
-          {
-            loading ?
-              <p className={`${md.question}`}> Уже зарегистрированы? Вход</p>
-              :
-              <p>Уже зарегистрированы? <Link
-                className={`${md.registration}`}
-                to={routesMap.login}>Вход</Link></p>
-          }
-          {
-            error && <AError className={md.errorNotification}
-              text={statusCode === 500 ? "Такой email уже зарегистрирован."
-                : "Ошибка :( Попробуйте позже"} />
-            // "Ошибка :( Попробуйте позже"
-            // `${error}  || erSC: ${statusCode}`
-          }
+          <form
+            className={md.form}
+            onSubmit={onSubmit}>
+            <Input
+              disabled={loading}
+              value={state.firstName.value}
+              type="text"
+              name="firstName"
+              placeholder="Имя"
+              errMessage={state.firstName.errMessage}
+              isValid={state.firstName.isValid}
+              onChange={onChange}
+            />
+            <Input
+              disabled={loading}
+              value={state.secondName.value}
+              type="text"
+              name="secondName"
+              placeholder="Фамилия"
+              errMessage={state.secondName.errMessage}
+              isValid={state.secondName.isValid}
+              onChange={onChange}
+            />
+            <Input
+              disabled={loading}
+              value={state.email.value}
+              type="email"
+              name="email"
+              placeholder="Электронная почта"
+              errMessage={state.email.errMessage}
+              isValid={state.email.isValid}
+              onChange={onChange}
+            />
+            <PasswordInp
+              disabled={loading}
+              value={state.password.value}
+              name="password"
+              placeholder="Введите пароль"
+              errMessage={state.password.errMessage}
+              isValid={state.password.isValid}
+              onChange={onChange}
+            />
+            <PasswordInp
+              disabled={loading}
+              value={state.checkPassword.value}
+              name="checkPassword"
+              placeholder="Повторите пароль"
+              errMessage={state.checkPassword.errMessage}
+              isValid={state.checkPassword.isValid}
+              onChange={onChange}
+            />
+            <Button
+              type="submit"
+              disabled={loading}
+              value={loading ? "Идет отправка на сервер..." : "Регистрация"}
+            />
+          </form>
+          {loginLink}
+          {errMessage}
         </PageLayout>
         :
         <Redirect to="/" />

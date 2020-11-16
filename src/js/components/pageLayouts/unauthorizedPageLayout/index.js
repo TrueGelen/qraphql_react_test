@@ -1,12 +1,12 @@
 /* libs */
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 /* styles */
 import md from './styles.module.scss'
 /* imgs */
 import proceset_logo_png from '../../../../img/proceset_logo.png'
 
-export default function UnauthorizedPageLayout({
+function UnauthorizedPageLayout({
   className,
   ...props }) {
 
@@ -23,6 +23,8 @@ export default function UnauthorizedPageLayout({
     </div>
   )
 }
+
+export default UnauthorizedPageLayout
 
 UnauthorizedPageLayout.defaultProps = {
   className: undefined
