@@ -15,8 +15,6 @@ import { SINGUP } from './queries'
 /* styles */
 import md from './styles.module.scss'
 
-
-
 export default function RegistrationPage(props) {
   const [singup, { loading, error }] = useMutation(SINGUP)
 
@@ -142,7 +140,6 @@ export default function RegistrationPage(props) {
       return null
     }
   }, [error])
-
 
   return (
     <>
